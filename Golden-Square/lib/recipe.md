@@ -38,13 +38,10 @@ minutes_to_read_text(1000) == "It will take 5 minutes to read 1000 words."
 It returns an Exception error"""
 minutes_to_read_text_neagtive(-200) == Exception "You can not have a negative number of words!"
 
-"""Given a boolean instead of a number of words
+"""Given any type other than int
 It returns an Exception error """
-minutes_to_read_text_boolean(True) == Exception "You have not entered a number in the correct format"
-"""
-Given an empty parameter
-It returns an exception error """
-minutes_to_read_text_none() == Exception "You have not given a number value"
+minutes_to_read_text_type(string) == Exception "You have not entered a number in the correct format"
+
 
 
 ```
@@ -60,16 +57,23 @@ Here's an example for you to start with:
 ```python
 # EXAMPLE
 
-from lib.extract_uppercase import *
+mport pytest
+from lib.read_text import *
 
-"""
-Given a lower and an uppercase word
-It returns a list with the uppercase word
-"""
-def test_extract_uppercase_with_upper_then_lower():
-    result = extract_uppercase("hello WORLD")
-    assert result == ["WORLD"]
-
+def test_minutes_to_read():
+    assert minutes_to_read_text(1000) == "It will take 5 minutes to read 1000 words!"
+    
+def test_minutes_to_read_text_negative():
+    with pytest.raises(Exception) as e:
+        minutes_to_read_text(-1000)
+    error_message = str(e.value)
+    assert error_message == "You can not have a negative number of words!"
+    
+def test_minutes_to_read_text_type():
+    with pytest.raises(Exception) as e:
+        minutes_to_read_text("hello")
+    error_message = str(e.value)
+    assert error_message == "You have not entered a number in the correct format"
 ```
 
 Ensure all test function names are unique, otherwise pytest will ignore them!
